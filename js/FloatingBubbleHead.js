@@ -41,14 +41,14 @@ class FloatingBubbleHead extends Component {
               return <View key={index}
                 style={{
                   width: 70,
-                               borderRadius: 35,
-                               height: 70,
-                               position: 'absolute',
-                               left: x + 3 * index,
-                               top: y + 3 * index,
-                               backgroundColor: colors[index],
-                             }}/>
-              }
+                  borderRadius: 35,
+                  height: 70,
+                  position: 'absolute',
+                  left: x + 3 * index,
+                  top: y + 3 * index,
+                  backgroundColor: colors[index],
+                }}/>
+            }
             )}
           </View>
         }
