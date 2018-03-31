@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<com.youtubedownloader.SpringRelativeLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="65dp"
-        android:id="@+id/chat_head_root"
+        android:id="@+id/floating_bubble_root"
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
     <!--Profile image for the chat head.-->
     <ImageView
-            android:id="@+id/chat_head_profile_iv"
+            android:id="@+id/head_profile_image"
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:layout_marginTop="8dp"
@@ -24,4 +24,4 @@
             android:layout_marginLeft="40dp"
             android:src="@mipmap/ic_launcher"
             tools:ignore="ContentDescription"/>
-</RelativeLayout>
+</com.youtubedownloader.SpringRelativeLayout>

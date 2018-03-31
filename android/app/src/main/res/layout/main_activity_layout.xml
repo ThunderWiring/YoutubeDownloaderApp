@@ -7,7 +7,7 @@
         tools:context="com.youtubedownloader.MainActivity">
 
     <Button
-            android:id="@+id/notify_me"
+            android:id="@+id/launch_floating_bubble"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"

@@ -5,6 +5,12 @@
  const React = require('React');
  const FloatingBubbleHead = require('./FloatingBubbleHead');
 
+ // const nativeEventListener = DeviceEventEmitter.addListener('onStop',
+ //   (e)=>{
+ //     console.log("bassam", "NATIVE_EVENT");
+ //     render();
+ // });
+
  import {
    StyleSheet,
    View,

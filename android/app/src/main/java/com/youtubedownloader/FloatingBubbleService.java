@@ -4,29 +4,32 @@ import android.app.Service;
 import android.content.Intent;
 import android.graphics.PixelFormat;
 import android.os.IBinder;
-import android.view.Gravity;
-import android.view.LayoutInflater;
-import android.view.MotionEvent;
-import android.view.View;
-import android.view.WindowManager;
+import android.view.*;
 import android.widget.ImageView;
 
 public class FloatingBubbleService extends Service {
 
-    private WindowManager mWindowManager;
+    private static final double SMOOTH_X_FACTOR = 1.3;
+    private static final double SMOOTH_Y_FACTOR = 1.2;
+
     private View floatingBubbleView;
-
-    public FloatingBubbleService() {
-    }
+    private WindowManager windowManager;
 
     @Override
-    public IBinder onBind(Intent intent) {
-        return null;
+    public int onStartCommand(Intent intent, int flags, int startId) {
+        if (intent != null) {
+            if (startId == Service.START_STICKY) {
+                handleStart();
+            }
+        }
+        return super.onStartCommand(intent, flags, startId);
     }
 
-    @Override
-    public void onCreate() {
-        super.onCreate();
+    /**
+     * initiates the layout params and defines a onTouch listener to drag it on user interaction.
+     * */
+    private void handleStart() {
+        windowManager = (WindowManager)getSystemService(WINDOW_SERVICE);
         floatingBubbleView = LayoutInflater.from(this).inflate(R.layout.floating_bubble_layout, null);
 
         final WindowManager.LayoutParams params = new WindowManager.LayoutParams(
@@ -37,14 +40,13 @@ public class FloatingBubbleService extends Service {
                 PixelFormat.TRANSLUCENT);
 
         params.gravity = Gravity.TOP | Gravity.LEFT;
-        params.x = 0;
+        params.x = 50;
         params.y = 100;
 
-        //Add the view to the window
-        mWindowManager = (WindowManager) getSystemService(WINDOW_SERVICE);
-        mWindowManager.addView(floatingBubbleView, params);
+        windowManager = (WindowManager) getSystemService(WINDOW_SERVICE);
+        windowManager.addView(floatingBubbleView, params);
 
-        //Set the close button.
+        // Set the close button.
         ImageView closeButton = (ImageView) floatingBubbleView.findViewById(R.id.close_btn);
         closeButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -54,54 +56,17 @@ public class FloatingBubbleService extends Service {
             }
         });
 
-        //Drag and move chat head using user's touch action.
-        final ImageView chatHeadImage = (ImageView) floatingBubbleView.findViewById(R.id.chat_head_profile_iv);
-        chatHeadImage.setOnTouchListener(new View.OnTouchListener() {
-            private int lastAction;
-            private int initialX;
-            private int initialY;
-            private float initialTouchX;
-            private float initialTouchY;
-
+        final SpringRelativeLayout layout = (SpringRelativeLayout)
+                floatingBubbleView.findViewById(R.id.floating_bubble_root);
+        layout.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 switch (event.getAction()) {
-                    case MotionEvent.ACTION_DOWN:
-
-                        //remember the initial position.
-                        initialX = params.x;
-                        initialY = params.y;
-
-                        //get the touch location
-                        initialTouchX = event.getRawX();
-                        initialTouchY = event.getRawY();
-
-                        lastAction = event.getAction();
-                        return true;
-                    case MotionEvent.ACTION_UP:
-                        //As we implemented on touch listener with ACTION_MOVE,
-                        //we have to check if the previous action was ACTION_DOWN
-                        //to identify if the user clicked the view or not.
-                        if (lastAction == MotionEvent.ACTION_DOWN) {
-                            //Open the chat conversation click.
-                            Intent intent = new Intent(FloatingBubbleService.this, MainActivity.class);
-                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                            startActivity(intent);
-
-                            //close the service and remove the chat heads
-                            stopSelf();
-                        }
-                        lastAction = event.getAction();
-                        return true;
                     case MotionEvent.ACTION_MOVE:
-                        //Calculate the X and Y coordinates of the view.
-                        params.x = initialX + (int) (event.getRawX() - initialTouchX);
-                        params.y = initialY + (int) (event.getRawY() - initialTouchY);
-
-                        //Update the layout with new X & Y coordinate
-                        mWindowManager.updateViewLayout(floatingBubbleView, params);
-                        lastAction = event.getAction();
-                        return true;
+                        params.x = (int) (SMOOTH_X_FACTOR * layout.getSpringPositionX() + event.getRawX());
+                        params.y = (int) (SMOOTH_Y_FACTOR * layout.getSpringPositionY() + event.getRawY());
+                        windowManager.updateViewLayout(floatingBubbleView, params);
+                        break;
                 }
                 return false;
             }
@@ -109,8 +74,18 @@ public class FloatingBubbleService extends Service {
     }
 
     @Override
+    public IBinder onBind(Intent intent) {
+        return null;
+    }
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+    }
+
+    @Override
     public void onDestroy() {
         super.onDestroy();
-        if (floatingBubbleView != null) mWindowManager.removeView(floatingBubbleView);
+        if (floatingBubbleView != null) windowManager.removeView(floatingBubbleView);
     }
 }
