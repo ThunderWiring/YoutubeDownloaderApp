@@ -47,11 +47,10 @@ public class FloatingBubbleService extends Service {
         windowManager.addView(floatingBubbleView, params);
 
         // Set the close button.
-        ImageView closeButton = (ImageView) floatingBubbleView.findViewById(R.id.close_btn);
+        ImageView closeButton = (ImageView) floatingBubbleView.findViewById(R.id.close_button);
         closeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //close the service and remove the chat head from the window
                 stopSelf();
             }
         });
@@ -61,6 +60,7 @@ public class FloatingBubbleService extends Service {
         layout.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
+                //TODO: handle rest of actions.
                 switch (event.getAction()) {
                     case MotionEvent.ACTION_MOVE:
                         params.x = (int) (SMOOTH_X_FACTOR * layout.getSpringPositionX() + event.getRawX());

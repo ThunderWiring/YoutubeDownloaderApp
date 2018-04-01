@@ -18,10 +18,10 @@
 
     <!--Close button-->
     <ImageView
-            android:id="@+id/close_btn"
+            android:id="@+id/close_button"
             android:layout_width="26dp"
             android:layout_height="26dp"
             android:layout_marginLeft="40dp"
-            android:src="@mipmap/ic_launcher"
+            android:src="@mipmap/cancel"
             tools:ignore="ContentDescription"/>
 </com.youtubedownloader.SpringRelativeLayout>
