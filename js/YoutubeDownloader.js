@@ -8,6 +8,7 @@
  const Image = require('Image');
  const nativeImageSource = require('nativeImageSource');
  const MainInterstitial = require('./MainInterstitial');
+ const Text = require('Text');
 
  import {
    StyleSheet,
@@ -42,12 +43,16 @@
 
  const styles = StyleSheet.create({
    container: {
-     opacity: 0.9,
-     backgroundColor: 'transparent',
+     backgroundColor: 'green',
    },
    image: {
       justifyContent: "center",
       alignItems: "center",
+    },
+    instructions: {
+      fontSize: 17,
+      textAlign: "center",
+      color: "#333333",
     },
  });
 
