@@ -31,7 +31,17 @@ public class FloatingBubbleService extends Service {
     private void handleStart() {
         windowManager = (WindowManager)getSystemService(WINDOW_SERVICE);
         floatingBubbleView = LayoutInflater.from(this).inflate(R.layout.floating_bubble_layout, null);
+        handleFloatingBubble();
 
+    }
+
+    /**
+     * @Require windowManager and floatingBubbleView be initialized.
+     *
+     * <p> sets the close button on-click event handler.
+     * sets the floating bubble touch event to change position accordingly.</p>
+     */
+    private void handleFloatingBubble() {
         final WindowManager.LayoutParams params = new WindowManager.LayoutParams(
                 WindowManager.LayoutParams.WRAP_CONTENT,
                 WindowManager.LayoutParams.WRAP_CONTENT,

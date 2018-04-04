@@ -2,14 +2,12 @@
  * @flow
  */
 
- const React = require('React');
- const FloatingBubbleHead = require('./FloatingBubbleHead');
+ 'use strict';
 
- // const nativeEventListener = DeviceEventEmitter.addListener('onStop',
- //   (e)=>{
- //     console.log("bassam", "NATIVE_EVENT");
- //     render();
- // });
+ const React = require('React');
+const Image = require('Image');
+ const nativeImageSource = require('nativeImageSource');
+ const MainInterstitial = require('./MainInterstitial');
 
  import {
    StyleSheet,
@@ -27,7 +25,16 @@
    render() {
      return (
        <View style={styles.container}>
-         <FloatingBubbleHead />
+         {/* <MainInterstitial /> */}
+         <Image
+           resizeMode={Image.resizeMode.contain}
+           style={styles.image}
+           source={nativeImageSource({
+             android: 'ic_launcher',
+             width: 100,
+             height: 100
+           })}
+         />
        </View>
      );
    }
@@ -35,12 +42,15 @@
 
  const styles = StyleSheet.create({
    container: {
-     position: 'absolute',
-     left: 0,
-     top: 0,
      opacity: 0.9,
      backgroundColor: 'transparent',
    },
+   image: {
+      width: 100,
+      height: 100,
+      justifyContent: "center",
+      alignItems: "center",
+    },
  });
 
 module.exports = YoutubeDownloader;
