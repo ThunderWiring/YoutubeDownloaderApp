@@ -5,7 +5,7 @@
  'use strict';
 
  const React = require('React');
-const Image = require('Image');
+ const Image = require('Image');
  const nativeImageSource = require('nativeImageSource');
  const MainInterstitial = require('./MainInterstitial');
 
@@ -46,8 +46,6 @@ const Image = require('Image');
      backgroundColor: 'transparent',
    },
    image: {
-      width: 100,
-      height: 100,
       justifyContent: "center",
       alignItems: "center",
     },
