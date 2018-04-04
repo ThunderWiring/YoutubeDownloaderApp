@@ -8,12 +8,12 @@
       android:name=".MainApplication"
       android:label="@string/app_name"
       android:icon="@drawable/button_transparent"
-      android:allowBackup="false"
+      android:allowBackup="true"
       android:theme="@style/AppTheme">
       <activity
         android:name=".MainActivity"
         android:label="@string/app_name"
-        android:theme="@style/Theme.AppCompat.Transparent.NoActionBar"
+        android:theme="@style/AppTheme"
         android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
         android:windowSoftInputMode="adjustResize">
         <intent-filter>
@@ -21,7 +21,7 @@
             <category android:name="android.intent.category.LAUNCHER" />
         </intent-filter>
       </activity>
-      <!--<activity android:name="com.facebook.react.devsupport.DevSettingsActivity" />-->
+      <activity android:name="com.facebook.react.devsupport.DevSettingsActivity" />
         <service
             android:name=".FloatingBubbleService"
             android:enabled="true"

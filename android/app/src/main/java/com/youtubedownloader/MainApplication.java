@@ -6,13 +6,34 @@ import android.content.Intent;
 import com.facebook.react.ReactApplication;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
+import com.facebook.react.bridge.NativeModule;
+import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.shell.MainReactPackage;
+import com.facebook.react.uimanager.ViewManager;
+import com.facebook.react.views.image.ReactImageManager;
 import com.facebook.soloader.SoLoader;
 
 import java.util.Arrays;
 import java.util.List;
 
 public class MainApplication extends Application implements ReactApplication {
+  private static class AppPackage implements ReactPackage {
+
+    @Override
+    public List<NativeModule> createNativeModules(ReactApplicationContext reactContext) {
+      // load all the react modules in this list.
+      List<NativeModule> modules = Arrays.asList();
+      return modules;
+    }
+
+    @Override
+    public List<ViewManager> createViewManagers(ReactApplicationContext reactContext) {
+      return Arrays.<ViewManager>asList(
+              new ReactImageManager()
+      );
+    }
+  }
+
   private final ReactNativeHost mReactNativeHost = new ReactNativeHost(this) {
     @Override
     public boolean getUseDeveloperSupport() {
@@ -22,14 +43,15 @@ public class MainApplication extends Application implements ReactApplication {
     @Override
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
-          new MainReactPackage()
+          new MainReactPackage(),
+          new AppPackage()
       );
     }
 
-    @Override
-    protected String getJSMainModuleName() {
-      return "index";
-    }
+//    @Override
+//    protected String getJSMainModuleName() {
+//      return "index";
+//    }
   };
 
   @Override
@@ -41,6 +63,5 @@ public class MainApplication extends Application implements ReactApplication {
   public void onCreate() {
     super.onCreate();
     SoLoader.init(this, /* native exopackage */ false);
-    getApplicationContext().startService(new Intent(getApplicationContext(), FloatingBubbleService.class));
   }
 }

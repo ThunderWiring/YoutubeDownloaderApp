@@ -5,12 +5,10 @@ import android.os.Bundle;
 import android.widget.Toast;
 import com.facebook.react.ReactActivity;
 
-import javax.annotation.Nullable;
 
 public class MainActivity extends ReactActivity {
     private static final int CODE_DRAW_OVER_OTHER_APP_PERMISSION = 2084;
 
-    @Nullable
     @Override
     protected String getMainComponentName() {
         return "YoutubeDownloader";
