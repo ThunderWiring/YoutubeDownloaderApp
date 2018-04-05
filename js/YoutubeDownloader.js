@@ -26,16 +26,7 @@
    render() {
      return (
        <View style={styles.container}>
-         {/* <MainInterstitial /> */}
-         <Image
-           resizeMode={Image.resizeMode.contain}
-           style={styles.image}
-           source={nativeImageSource({
-             android: 'ic_launcher',
-             width: 100,
-             height: 100
-           })}
-         />
+         <MainInterstitial />
        </View>
      );
    }
@@ -43,17 +34,11 @@
 
  const styles = StyleSheet.create({
    container: {
-     backgroundColor: 'green',
+     // position: 'absolute',
+     left: 0,
+     top: 0,
+     opacity: 0.9,
    },
-   image: {
-      justifyContent: "center",
-      alignItems: "center",
-    },
-    instructions: {
-      fontSize: 17,
-      textAlign: "center",
-      color: "#333333",
-    },
  });
 
 module.exports = YoutubeDownloader;
