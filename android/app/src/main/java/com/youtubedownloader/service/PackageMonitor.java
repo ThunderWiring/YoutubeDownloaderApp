@@ -1,10 +1,11 @@
 package com.youtubedownloader.service;
 
+import android.app.ActivityManager;
 import android.app.AppOpsManager;
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
-import android.provider.Settings;
+import android.util.Log;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.youtubedownloader.R;
@@ -16,6 +17,7 @@ public class PackageMonitor extends ReactContextBaseJavaModule {
 
     private ReactApplicationContext mContext;
 
+    //TODO: handle null context
     public PackageMonitor(ReactApplicationContext reactContext) {
         super(reactContext);
         mContext = reactContext;
@@ -31,8 +33,18 @@ public class PackageMonitor extends ReactContextBaseJavaModule {
      * @throws UsageStatsPermissionNotGrantedException if Usage Stats permission is not granted.
      * */
     public String getCurrentForegroundActivity() throws UsageStatsPermissionNotGrantedException {
-        if (!isUsageStatsPermissionGranted()) {
-            throw new UsageStatsPermissionNotGrantedException();
+        Log.d("bassam", "checing for ust permission");
+//        if (!isUsageStatsPermissionGranted()) {
+//            Log.d("bassam", "excep UsageStatsPermissionNotGrantedException thrown :O");
+//            throw new UsageStatsPermissionNotGrantedException();
+//        }
+        try {
+            Log.d("bassam", "defining ActivityManager ...");
+            ActivityManager activityManager = (ActivityManager) mContext.getSystemService(Context.ACTIVITY_SERVICE);
+            Log.d("bassam", "proc name: " + activityManager.getRunningAppProcesses().get(0).processName);
+            return activityManager.getRunningAppProcesses().get(0).processName;
+        } catch (Exception e) {
+            Log.d("bassam", "excep: " + e.getMessage());
         }
         return null;
     }

@@ -4,8 +4,11 @@ import android.app.Service;
 import android.content.Intent;
 import android.graphics.PixelFormat;
 import android.os.IBinder;
+import android.util.Log;
 import android.view.*;
 import android.widget.ImageView;
+import com.facebook.react.bridge.ReactApplicationContext;
+import com.youtubedownloader.service.PackageMonitor;
 
 public class FloatingBubbleService extends Service {
 
@@ -81,6 +84,19 @@ public class FloatingBubbleService extends Service {
                 return false;
             }
         });
+        Log.d("bassam", "before findViewById");
+        try {
+            floatingBubbleView.findViewById(R.id.floating_head_image).setOnClickListener(new View.OnClickListener() {
+
+                @Override
+                public void onClick(View v) {
+
+                }
+            });
+        } catch (Exception e) {
+            Log.d("bassam", "excep err: " + e.getMessage());
+        }
+        Log.d("bassam", "no exception - after findViewById");
     }
 
     @Override

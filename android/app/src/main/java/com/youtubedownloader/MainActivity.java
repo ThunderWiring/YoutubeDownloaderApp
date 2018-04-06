@@ -2,8 +2,12 @@ package com.youtubedownloader;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
 import android.widget.Toast;
 import com.facebook.react.ReactActivity;
+import com.facebook.react.bridge.ReactApplicationContext;
+import com.youtubedownloader.service.PackageMonitor;
 
 
 public class MainActivity extends ReactActivity {
@@ -18,14 +22,13 @@ public class MainActivity extends ReactActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 //        setContentView(R.layout.main_activity_layout);
-//        findViewById(R.id.launch_floating_bubble).setOnClickListener(new View.OnClickListener() {
-//
-//            @Override
-//            public void onClick(View v) {
+        Log.d("bassam", "defining onClick ...");
 //                initializeFloatingBubble();
 //                finish(); // make the button vanish after click.
-//            }
-//        });
+        PackageMonitor pm = new PackageMonitor((ReactApplicationContext)getReactInstanceManager().getCurrentReactContext());
+        Log.d("bassam", "defining pm");
+        pm.getCurrentForegroundActivity();
+        Log.d("bassam", "onClick done!");
         initializeFloatingBubble();
     }
 

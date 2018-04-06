@@ -9,7 +9,7 @@
 
     <!--Profile image for the chat head.-->
     <ImageView
-            android:id="@+id/head_profile_image"
+            android:id="@+id/floating_head_image"
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:layout_marginTop="8dp"
