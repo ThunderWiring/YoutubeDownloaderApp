@@ -34,10 +34,9 @@
 
  const styles = StyleSheet.create({
    container: {
-     // position: 'absolute',
-     left: 0,
-     top: 0,
-     opacity: 0.9,
+     // backgroundColor: 'rgba(255, 255, 255)',
+     // opacity: 0.1,
+     flexDirection: 'column',
    },
  });
 
