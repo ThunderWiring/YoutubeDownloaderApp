@@ -57,17 +57,10 @@ public class PackageMonitor extends ReactContextBaseJavaModule {
      * @return true IFF Usage Stats permission is granted for the app.
      * */
     private boolean isUsageStatsPermissionGranted() {
-        try {
-            PackageManager packageManager = mContext.getPackageManager();
-            ApplicationInfo applicationInfo = packageManager.getApplicationInfo(mContext.getPackageName(), 0);
-            AppOpsManager appOpsManager = (AppOpsManager) mContext.getSystemService(Context.APP_OPS_SERVICE);
-            int mode = appOpsManager.checkOpNoThrow(AppOpsManager.OPSTR_GET_USAGE_STATS,
-                    applicationInfo.uid, applicationInfo.packageName);
-            return (mode == AppOpsManager.MODE_ALLOWED);
-
-        } catch (PackageManager.NameNotFoundException e) {
-            return false;
-        }
+        AppOpsManager appOps = (AppOpsManager) mContext.getSystemService(Context.APP_OPS_SERVICE);
+        int mode = appOps.checkOpNoThrow(AppOpsManager.OPSTR_GET_USAGE_STATS,
+                android.os.Process.myUid(), mContext.getPackageName());
+        return mode == AppOpsManager.MODE_ALLOWED;
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
