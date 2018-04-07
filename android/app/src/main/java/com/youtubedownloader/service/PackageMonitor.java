@@ -1,10 +1,16 @@
 package com.youtubedownloader.service;
 
+import android.annotation.TargetApi;
 import android.app.ActivityManager;
 import android.app.AppOpsManager;
+import android.app.Service;
+import android.app.usage.UsageEvents;
+import android.app.usage.UsageStatsManager;
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.os.Build;
 import android.util.Log;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
@@ -33,19 +39,15 @@ public class PackageMonitor extends ReactContextBaseJavaModule {
      * @throws UsageStatsPermissionNotGrantedException if Usage Stats permission is not granted.
      * */
     public String getCurrentForegroundActivity() throws UsageStatsPermissionNotGrantedException {
-        Log.d("bassam", "checing for ust permission");
-//        if (!isUsageStatsPermissionGranted()) {
-//            Log.d("bassam", "excep UsageStatsPermissionNotGrantedException thrown :O");
-//            throw new UsageStatsPermissionNotGrantedException();
-//        }
-        try {
-            Log.d("bassam", "defining ActivityManager ...");
-            ActivityManager activityManager = (ActivityManager) mContext.getSystemService(Context.ACTIVITY_SERVICE);
-            Log.d("bassam", "proc name: " + activityManager.getRunningAppProcesses().get(0).processName);
-            return activityManager.getRunningAppProcesses().get(0).processName;
-        } catch (Exception e) {
-            Log.d("bassam", "excep: " + e.getMessage());
+        if (!isUsageStatsPermissionGranted()) {
+            throw new UsageStatsPermissionNotGrantedException();
         }
+        if (AndroidVersionUtils.isLollipop()) {
+            return lollipopForegroundPackage();
+        } else if (AndroidVersionUtils.isPreLollipop()) {
+            return preLollipopForegroundPackage();
+        }
+        //TODO: add support for M and above
         return null;
     }
 
@@ -66,6 +68,42 @@ public class PackageMonitor extends ReactContextBaseJavaModule {
         } catch (PackageManager.NameNotFoundException e) {
             return false;
         }
+    }
+
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    private String lollipopForegroundPackage() {
+        UsageStatsManager mUsageStatsManager = (UsageStatsManager) mContext.getSystemService(Service.USAGE_STATS_SERVICE);
+        long time = System.currentTimeMillis();
+
+        UsageEvents usageEvents = mUsageStatsManager.queryEvents(time - 1000 * 3600, time);
+        UsageEvents.Event event = new UsageEvents.Event();
+        while (usageEvents.hasNextEvent()) {
+            usageEvents.getNextEvent(event);
+            if(event.getEventType() == UsageEvents.Event.MOVE_TO_FOREGROUND) {
+                return event.getPackageName();
+            }
+        }
+        return null;
+    }
+
+    private String preLollipopForegroundPackage() {
+        ActivityManager am = (ActivityManager) mContext.getSystemService(Service.ACTIVITY_SERVICE);
+        ActivityManager.RunningTaskInfo foregroundTaskInfo = am.getRunningTasks(1).get(0);
+        String foregroundTaskPackageName = foregroundTaskInfo .topActivity.getPackageName();
+        PackageManager pm = mContext.getPackageManager();
+        PackageInfo foregroundAppPackageInfo = null;
+        try {
+            foregroundAppPackageInfo = pm.getPackageInfo(foregroundTaskPackageName, 0);
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+            return null;
+        }
+
+        String foregroundApp = null;
+        if(foregroundAppPackageInfo != null)
+            foregroundApp = foregroundAppPackageInfo.applicationInfo.packageName;
+
+        return foregroundApp;
     }
 
     /**
