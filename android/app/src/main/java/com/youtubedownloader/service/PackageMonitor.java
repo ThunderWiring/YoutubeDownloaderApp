@@ -63,6 +63,9 @@ public class PackageMonitor extends ReactContextBaseJavaModule {
         return mode == AppOpsManager.MODE_ALLOWED;
     }
 
+    /**
+     * @return name of the foreground package for OS version Lollipop
+     * */
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     private String lollipopForegroundPackage() {
         UsageStatsManager mUsageStatsManager = (UsageStatsManager) mContext.getSystemService(Service.USAGE_STATS_SERVICE);
@@ -79,6 +82,9 @@ public class PackageMonitor extends ReactContextBaseJavaModule {
         return null;
     }
 
+    /**
+     * @return name of the foreground package for OS version pre Lollipop
+     * */
     private String preLollipopForegroundPackage() {
         ActivityManager am = (ActivityManager) mContext.getSystemService(Service.ACTIVITY_SERVICE);
         ActivityManager.RunningTaskInfo foregroundTaskInfo = am.getRunningTasks(1).get(0);

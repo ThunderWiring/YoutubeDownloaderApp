@@ -21,14 +21,6 @@ public class MainActivity extends ReactActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        setContentView(R.layout.main_activity_layout);
-        Log.d("bassam", "defining onClick ...");
-//                initializeFloatingBubble();
-//                finish(); // make the button vanish after click.
-        PackageMonitor pm = new PackageMonitor((ReactApplicationContext)getReactInstanceManager().getCurrentReactContext());
-        Log.d("bassam", "defining pm");
-        pm.getCurrentForegroundActivity();
-        Log.d("bassam", "onClick done!");
         initializeFloatingBubble();
     }
 
