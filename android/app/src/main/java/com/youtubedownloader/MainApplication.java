@@ -2,7 +2,6 @@ package com.youtubedownloader;
 
 import android.app.Application;
 
-import android.content.Intent;
 import com.facebook.react.ReactApplication;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;

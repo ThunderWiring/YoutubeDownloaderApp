@@ -2,12 +2,8 @@ package com.youtubedownloader;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
 import android.widget.Toast;
 import com.facebook.react.ReactActivity;
-import com.facebook.react.bridge.ReactApplicationContext;
-import com.youtubedownloader.service.PackageMonitor;
 
 
 public class MainActivity extends ReactActivity {
@@ -42,8 +38,6 @@ public class MainActivity extends ReactActivity {
                         Toast.LENGTH_SHORT).show();
                 finish();
             }
-        } else {
-            super.onActivityResult(requestCode, resultCode, data);
         }
     }
 

@@ -7,11 +7,9 @@ import android.app.Service;
 import android.app.usage.UsageEvents;
 import android.app.usage.UsageStatsManager;
 import android.content.Context;
-import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Build;
-import android.util.Log;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.youtubedownloader.R;
@@ -85,6 +83,7 @@ public class PackageMonitor extends ReactContextBaseJavaModule {
     /**
      * @return name of the foreground package for OS version pre Lollipop
      * */
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     private String preLollipopForegroundPackage() {
         ActivityManager am = (ActivityManager) mContext.getSystemService(Service.ACTIVITY_SERVICE);
         ActivityManager.RunningTaskInfo foregroundTaskInfo = am.getRunningTasks(1).get(0);
