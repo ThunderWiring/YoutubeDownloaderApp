@@ -20,10 +20,12 @@ import com.youtubedownloader.R;
 public class PackageMonitor extends ReactContextBaseJavaModule {
 
     private ReactApplicationContext mContext;
-
-    //TODO: handle null context
+    
     public PackageMonitor(ReactApplicationContext reactContext) {
         super(reactContext);
+        if (reactContext == null) {
+            throw new NullContextException();
+        }
         mContext = reactContext;
     }
 
@@ -112,6 +114,13 @@ public class PackageMonitor extends ReactContextBaseJavaModule {
         @Override
         public String getMessage() {
             return  mContext.getResources().getString(R.string.usage_stats_exception_message);
+        }
+    }
+
+    class NullContextException extends RuntimeException {
+        @Override
+        public String getMessage() {
+            return  mContext.getResources().getString(R.string.null_context_exception_message);
         }
     }
 }

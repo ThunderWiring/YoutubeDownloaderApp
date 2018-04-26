@@ -50,8 +50,8 @@ public class FloatingBubbleService extends Service {
                 PixelFormat.TRANSLUCENT);
 
         params.gravity = Gravity.TOP | Gravity.LEFT;
-        params.x = 50;
-        params.y = 100;
+        params.x = 150;
+        params.y = 150;
 
         windowManager = (WindowManager) getSystemService(WINDOW_SERVICE);
         windowManager.addView(floatingBubbleView, params);
