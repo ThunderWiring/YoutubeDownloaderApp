@@ -7,12 +7,20 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
+    <!--<ImageButton-->
+        <!--android:id="@+id/floating_head_image_button"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:src="@drawable/button_transparent"-->
+
+    <!--/>-->
     <!--Profile image for the chat head.-->
     <ImageView
             android:id="@+id/floating_head_image"
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:layout_marginTop="8dp"
+            android:layout_marginBottom="20dp"
             android:src="@drawable/button_transparent"
             tools:ignore="ContentDescription"/>
 

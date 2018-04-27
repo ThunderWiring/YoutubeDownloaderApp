@@ -4,6 +4,7 @@ import android.app.Service;
 import android.content.Intent;
 import android.graphics.PixelFormat;
 import android.os.IBinder;
+import android.util.Log;
 import android.view.*;
 import android.widget.ImageView;
 
@@ -49,7 +50,7 @@ public class FloatingBubbleService extends Service {
                 WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
                 PixelFormat.TRANSLUCENT);
 
-        params.gravity = Gravity.TOP | Gravity.LEFT;
+        params.gravity = Gravity.BOTTOM | Gravity.RIGHT;
         params.x = 150;
         params.y = 150;
 
@@ -62,6 +63,20 @@ public class FloatingBubbleService extends Service {
             @Override
             public void onClick(View v) {
                 stopSelf();
+            }
+        });
+
+        // set the image click
+        ImageView floatingHeadImage = (ImageView) floatingBubbleView.findViewById(R.id.floating_head_image);
+        floatingHeadImage.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Log.d("bassam", "click registered!");
+                Intent youtubeIntent =
+                        getPackageManager().getLaunchIntentForPackage("com.google.android.youtube");
+                if (youtubeIntent != null) {
+                    startActivity(youtubeIntent);
+                }
             }
         });
 

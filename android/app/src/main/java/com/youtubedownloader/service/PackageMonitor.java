@@ -20,7 +20,7 @@ import com.youtubedownloader.R;
 public class PackageMonitor extends ReactContextBaseJavaModule {
 
     private ReactApplicationContext mContext;
-    
+
     public PackageMonitor(ReactApplicationContext reactContext) {
         super(reactContext);
         if (reactContext == null) {

@@ -44,6 +44,6 @@ public class MainActivity extends ReactActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-//        stopService(new Intent(MainActivity.this, FloatingBubbleService.class));
+        stopService(new Intent(MainActivity.this, FloatingBubbleService.class));
     }
 }
